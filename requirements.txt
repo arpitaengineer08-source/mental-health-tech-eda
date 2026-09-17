@@ -1,0 +1,15 @@
+# Core analysis
+pandas>=1.5
+numpy>=1.23
+
+# Notebook charts
+matplotlib>=3.6
+seaborn>=0.12
+
+# Dashboard
+streamlit>=1.28
+plotly>=5.15
+
+# To open the notebook
+jupyter>=1.0
+notebook>=6.5
