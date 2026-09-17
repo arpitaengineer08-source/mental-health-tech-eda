@@ -247,7 +247,7 @@ with tab_over:
         fig.add_annotation(text=f"<b>{rate:.0f}%</b>", showarrow=False, font=dict(size=46, color=TEAL))
         fig.add_annotation(text="sought treatment", y=0.36, showarrow=False,
                            font=dict(size=13, color=INK))
-        st.plotly_chart(style(fig, 400).update_layout(title="The headline number"),
+        st.plotly_chart(style(fig, 400).update_layout(title="The headline number", showlegend=False),
                         **STRETCH)
         note(
             "An almost even split. Mental illness in this workforce is not an edge case affecting "
