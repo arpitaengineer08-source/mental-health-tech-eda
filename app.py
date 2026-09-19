@@ -34,6 +34,39 @@ from data_prep import (  # noqa: E402
 # --------------------------------------------------------------------------- #
 # Page config + design tokens
 # --------------------------------------------------------------------------- #
+
+st.markdown("""
+<div id="loader-overlay">
+  <div class="loader-content">
+    <svg viewBox="0 0 80 80" width="80" height="80">
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#1E6F8E" stroke-width="3" opacity="0.3"/>
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#C9A84C" stroke-width="3"
+              stroke-dasharray="226" stroke-dashoffset="226"
+              style="animation:arc 1.8s ease forwards;transform-origin:center;transform:rotate(-90deg)"/>
+      <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
+            font-family="Georgia,serif" font-size="22" fill="#FFFFFF" font-weight="600">MH</text>
+    </svg>
+    <div class="loader-title">Mental Health in Tech</div>
+    <div class="loader-sub">OSMI Survey · 2014 · EDA Dashboard</div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+</div>
+<style>
+@keyframes arc { to { stroke-dashoffset: 0; } }
+@keyframes fadeOut { 0%{opacity:1} 85%{opacity:1} 100%{opacity:0;pointer-events:none} }
+@keyframes barFill { from{width:0%} to{width:100%} }
+@keyframes slideUp { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
+#loader-overlay { position:fixed; inset:0; background:linear-gradient(160deg,#0A0E1A 0%,#0D1630 100%);
+  display:flex; align-items:center; justify-content:center; z-index:99999;
+  animation:fadeOut 0.6s ease 2.8s forwards; }
+.loader-content { text-align:center; animation:slideUp 0.7s ease both; }
+.loader-title { font-family:Georgia,serif; font-size:1.9rem; font-weight:700; color:#FFFFFF; margin:1.4rem 0 0.4rem; }
+.loader-sub { font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:#C9A84C; margin-bottom:2rem; }
+.loader-bar-wrap { width:200px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; margin:0 auto; overflow:hidden; }
+.loader-bar { height:100%; background:linear-gradient(90deg,#1E6F8E,#C9A84C); animation:barFill 2.4s ease forwards; }
+</style>
+""", unsafe_allow_html=True)
+
 st.set_page_config(
     page_title="Mental Health in Tech · OSMI 2014",
     page_icon="◍",
@@ -41,8 +74,17 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("""
+    <style>
+    * { color: #FFFFFF !important; }
+    .stApp { background: #0A0E1A !important; }
+    section[data-testid="stSidebar"] { background: #0D1221 !important; }
+    section[data-testid="stSidebar"] * { color: rgba(255,255,255,0.85) !important; }
+    </style>
+""", unsafe_allow_html=True)
+
 INK = "#142027"
-PAPER = "#F5F7F6"
+PAPER = "#0A0E1A"
 TEAL = "#157A6E"
 CORAL = "#C1583F"
 AMBER = "#D9A441"
@@ -67,7 +109,7 @@ st.markdown(
     /* ---- masthead ---- */
     .masthead {{ border-bottom: 2px solid {INK}; padding: 0.2rem 0 1.1rem 0; margin-bottom: 1.6rem; }}
     .masthead h1 {{ font-size: 2.6rem; line-height: 1.1; margin: 0 0 .45rem 0; }}
-    .masthead p {{ margin: 0; color: #4B5C63; font-size: .95rem; max-width: 62ch; }}
+    .masthead p {{ margin: 0; color: rgba(255,255,255,0.65); font-size: .95rem; max-width: 62ch; }}
     .dek {{ display:inline-block; font-size:.74rem; letter-spacing:.06em; color:{TEAL};
             border:1px solid {TEAL}; border-radius:2px; padding:.14rem .5rem; margin-bottom:.7rem; }}
 
@@ -75,23 +117,23 @@ st.markdown(
     .stat {{ border-top: 3px solid {TEAL}; padding: .85rem .1rem .2rem 0; }}
     .stat .v {{ font-family:'Newsreader',serif; font-size: 2.5rem; line-height: 1;
                 font-weight: 600; color: {INK}; }}
-    .stat .k {{ font-size: .8rem; color: #566A70; margin-top: .35rem; }}
+    .stat .k {{ font-size: .8rem; color: rgba(255,255,255,0.55); margin-top: .35rem; }}
     .stat.alt {{ border-top-color: {CORAL}; }}
     .stat.warn {{ border-top-color: {AMBER}; }}
     .stat.plum {{ border-top-color: {PLUM}; }}
 
     /* ---- takeaway note ---- */
-    .note {{ background: #EAF0EE; border-left: 3px solid {TEAL}; padding: .75rem .95rem;
-             font-size: .9rem; color: #31444B; border-radius: 0 3px 3px 0; margin-top:.3rem; }}
+    .note {{ background: #111827; border-left: 3px solid {TEAL}; padding: .75rem .95rem;
+             font-size: .9rem; color: rgba(255,255,255,0.75); border-radius: 0 3px 3px 0; margin-top:.3rem; }}
 
-    section[data-testid="stSidebar"] {{ background: #ECF0EE; border-right: 1px solid #D8E0DD; }}
+    section[data-testid="stSidebar"] {{ background: #0D1221; border-right: 1px solid #1E2A3A; }}
     section[data-testid="stSidebar"] h2 {{ font-size: 1.05rem !important; }}
 
-    .stTabs [data-baseweb="tab-list"] {{ gap: 1.6rem; border-bottom: 1px solid #D8E0DD; }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 1.6rem; border-bottom: 1px solid #1E2A3A; }}
     .stTabs [data-baseweb="tab"] {{ padding: .45rem 0; background: transparent; font-size: .93rem; }}
     .stTabs [aria-selected="true"] {{ color: {TEAL} !important;
                                       border-bottom: 2px solid {TEAL} !important; }}
-    [data-testid="stDataFrame"] {{ border: 1px solid #D8E0DD; }}
+    [data-testid="stDataFrame"] {{ border: 1px solid #1E2A3A; }}
     footer, #MainMenu {{ visibility: hidden; }}
     </style>
     """,
@@ -112,15 +154,15 @@ def style(fig: go.Figure, height: int = 380, legend_top: bool = True) -> go.Figu
         margin=dict(l=10, r=10, t=46, b=10),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", size=12, color=INK),
-        title_font=dict(family="Newsreader, serif", size=16, color=INK),
+        font=dict(family="Inter, sans-serif", size=12, color="#C8D4DC"),
+        title_font=dict(family="Newsreader, serif", size=16, color="#E8EEF4"),
         hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter"),
         legend=dict(orientation="h", y=1.02, x=0, yanchor="bottom", title_text="")
         if legend_top
         else {},
     )
-    fig.update_xaxes(showgrid=False, linecolor="#D8E0DD", zeroline=False)
-    fig.update_yaxes(gridcolor="#E2E8E6", zeroline=False, linecolor="rgba(0,0,0,0)")
+    fig.update_xaxes(showgrid=False, linecolor="#1E2A3A", zeroline=False)
+    fig.update_yaxes(gridcolor="#1E2A3A", zeroline=False, linecolor="rgba(0,0,0,0)")
     return fig
 
 
@@ -240,7 +282,7 @@ with tab_over:
                 labels=t.index, values=t.values, hole=0.66, sort=False,
                 marker=dict(colors=[BINARY[i] for i in t.index],
                             line=dict(color=PAPER, width=3)),
-                textinfo="none", hovertemplate="%{label}: %{value} people (%{percent})<extra></extra>",
+                textinfo="none", hovertemplate="%{label}: %{value} people (%{percent})<extra></extra>", showlegend=False,
             )
         )
         rate = df["Treated"].mean() * 100
